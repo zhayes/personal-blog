@@ -5,7 +5,7 @@
 # Site
 title: 泡了鸭头的酸辣汤
 subtitle: ''
-description: ''
+description: '个人的后花园'
 keywords:
 author: zha
 language: zh-CN
@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://zhayes.github.io/personal-blog
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -22,7 +22,7 @@ pretty_urls:
 
 # Directory
 source_dir: source
-public_dir: public
+public_dir: doc
 tag_dir: tags
 archive_dir: archives
 category_dir: categories

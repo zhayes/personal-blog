@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="上个月中途接手了个项目，主要功能是C端用户购房申请资料的表单提交，单纯就功能而言确实没什么可说的，但问题在于期极复杂繁琐多变的资格逻辑校验。由于政府的购房政策多变，几乎每隔一段时间都要调那么几次，而且动不动还要做新老数据兼容。我接手的源代码里面几乎全部都是&#96;if else&#96;判断，几个页面里差不多都有二三十个判断，代码的可读性维护性很差。可以想象一份很难维护的代码，又反复要求被修改，这对开发这而言是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次代码重构">
+<meta property="og:url" content="https://zhayes.github.io/personal-blog/2020/07/29/restruction/index.html">
+<meta property="og:site_name" content="泡了鸭头的酸辣汤">
+<meta property="og:description" content="上个月中途接手了个项目，主要功能是C端用户购房申请资料的表单提交，单纯就功能而言确实没什么可说的，但问题在于期极复杂繁琐多变的资格逻辑校验。由于政府的购房政策多变，几乎每隔一段时间都要调那么几次，而且动不动还要做新老数据兼容。我接手的源代码里面几乎全部都是&#96;if else&#96;判断，几个页面里差不多都有二三十个判断，代码的可读性维护性很差。可以想象一份很难维护的代码，又反复要求被修改，这对开发这而言是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.unsplash.com/photo-1544256718-3bcf237f3974?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=10">
+<meta property="article:published_time" content="2020-07-29T06:08:15.000Z">
+<meta property="article:modified_time" content="2022-03-16T08:23:03.937Z">
+<meta property="article:author" content="zha">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1544256718-3bcf237f3974?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=10">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/personal-blog/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/personal-blog/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/personal-blog/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>记一次代码重构</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/personal-blog/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/personal-blog/">首页</a></li><!--
+     --><!--
+       --><li><a href="/personal-blog/archives/">归档</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/personal-blog/2020/06/20/cli/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhayes.github.io/personal-blog/2020/07/29/restruction/&t=记一次代码重构"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        记一次代码重构
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">zha</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-29T06:08:15.000Z" itemprop="datePublished">2020-07-29</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/personal-blog/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/personal-blog/tags/javascript/" rel="tag">javascript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://images.unsplash.com/photo-1544256718-3bcf237f3974?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=10"></p>
+<p>上个月中途接手了个项目，主要功能是C端用户购房申请资料的表单提交，单纯就功能而言确实没什么可说的，但问题在于期极复杂繁琐多变的资格逻辑校验。由于政府的购房政策多变，几乎每隔一段时间都要调那么几次，而且动不动还要做新老数据兼容。我接手的源代码里面几乎全部都是<code>if else</code>判断，几个页面里差不多都有二三十个判断，代码的可读性维护性很差。可以想象一份很难维护的代码，又反复要求被修改，这对开发这而言是极其痛苦的事情。因此我重构的目就是尽量减少<code>if else</code>逻辑判断。</p>
+<span id="more"></span>
+<p>于是我想到用特定的数据结构来映射逻辑关系。以后要动里面的逻辑我简单改下数据结构就好了。虽然最后的数据结构很庞大，但是我发现维护起来确实很方便。就目前而言，代码的可维护性是我考虑的首选。</p>
+<p>实现主要思路逻辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">//后台给你返回的数据结构大概如下</span><br><span class="line">&#123;</span><br><span class="line">    household:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: false,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [</span><br><span class="line">            &#123;name: &quot;杭州市户籍（9区）&quot;, key: &quot;杭州市户籍（9区）&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;非杭州市户籍&quot;, key: &quot;非杭州市户籍&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;落户满2年的临安、桐庐、建德、淳安户籍&quot;, key: &quot;落户满2年的临安、桐庐、建德、淳安户籍&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;落户未满2年的临安、桐庐、建德、淳安户籍&quot;, key: &quot;落户未满2年的临安、桐庐、建德、淳安户籍&quot;&#125;</span><br><span class="line">        ],</span><br><span class="line">        qkey: &quot;household&quot;,</span><br><span class="line">        title: &quot;户籍&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    settleMode:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: true,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [&#123;name: &quot;非以投靠成年子女方式&quot;, key: &quot;非以投靠成年子女方式&quot;&#125;, &#123;name: &quot;以投靠成年子女方式，且落户已满3年&quot;, key: &quot;以投靠成年子女方式，且落户已满3年&quot;&#125;, &#123;name: &quot;以投靠成年子女方式，且落户未满3年&quot;, key: &quot;以投靠成年子女方式，且落户未满3年&quot;&#125;],</span><br><span class="line">        qkey: &quot;settleMode&quot;,</span><br><span class="line">        title: &quot;落户方式及年限&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    housingStockNumber:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: false,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [&#123;name: &quot;0套&quot;, key: &quot;0套&quot;&#125;, &#123;name: &quot;1套&quot;, key: &quot;1套&quot;&#125;, &#123;name: &quot;2套及以上&quot;, key: &quot;2套及以上&quot;&#125;],</span><br><span class="line">        qkey: &quot;housingStockNumber&quot;,</span><br><span class="line">        title: &quot;在杭州市（9区）拥有住房&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    ltjcHousingStockNumber:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: true,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [</span><br><span class="line">            &#123;name: &quot;0套&quot;, key: &quot;0套&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;1套&quot;, key: &quot;1套&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;2套及以上&quot;, key: &quot;2套及以上&quot;&#125;</span><br><span class="line">        ],</span><br><span class="line">        qkey: &quot;ltjcHousingStockNumber&quot;,</span><br><span class="line">        title: &quot;在户籍所在地拥有住房&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    maritalStatus:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: false,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [</span><br><span class="line">            &#123;name: &quot;未婚单身&quot;, key: &quot;未婚单身&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;已婚&quot;, key: &quot;已婚&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;离异单身&quot;, key: &quot;离异单身&quot;&#125;,</span><br><span class="line">            &#123;name: &quot;丧偶&quot;, key: &quot;丧偶&quot;&#125;</span><br><span class="line">        ],</span><br><span class="line">        qkey: &quot;maritalStatus&quot;,</span><br><span class="line">        title: &quot;婚姻情况&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    divorceTime:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: true,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [&#123;name: &quot;2018年4月4号前（含）&quot;, key: &quot;2018年4月4号前（含）&quot;&#125;, &#123;name: &quot;2018年4月4号后&quot;, key: &quot;2018年4月4号后&quot;&#125;],</span><br><span class="line">        qkey: &quot;divorceTime&quot;,</span><br><span class="line">        title: &quot;离异时间段&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    personalIncome:&#123;</span><br><span class="line">        allowForbidden: false,</span><br><span class="line">        caseDesc: &quot;&quot;,</span><br><span class="line">        caseImg: [],</span><br><span class="line">        desc: &quot;&quot;,</span><br><span class="line">        fixed: 1,</span><br><span class="line">        forceHidden: false,</span><br><span class="line">        hidden: true,</span><br><span class="line">        max: 1,</span><br><span class="line">        min: 1,</span><br><span class="line">        options: [&#123;name: &quot;是&quot;, key: &quot;是&quot;&#125;, &#123;name: &quot;否&quot;, key: &quot;否&quot;&#125;],</span><br><span class="line">        qkey: &quot;personalIncome&quot;,</span><br><span class="line">        title: &quot;自购房之日起前3年内在杭州市连续缴纳2年及以上社保或者个税（如有新政策出台，以新政策为准）&quot;,</span><br><span class="line">        type: &quot;select&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//我定义类似如下数据结构来映射逻辑关系</span><br><span class="line">&#123;</span><br><span class="line">    household:&#123;</span><br><span class="line">        &#x27;杭州市户籍（9区&#x27;:&#123;</span><br><span class="line">            maritalStatus:&#123;</span><br><span class="line">                &quot;未婚单身&quot;:&#123;</span><br><span class="line">                    housingStockNumber:&#123;</span><br><span class="line">                        &quot;0套&quot;:&#123;</span><br><span class="line">                            result:&#123;</span><br><span class="line">                                limit: true//是不是要限购</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;1套&quot;:&#123;</span><br><span class="line">                            //...</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;2套及以上&quot;:&#123;</span><br><span class="line">                            //...</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;已婚&quot;:&#123;</span><br><span class="line">                    //...</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;离异单身&quot;:&#123;</span><br><span class="line">                    //...</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;丧偶&quot;:&#123;</span><br><span class="line">                    //...</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x27;落户满2年的临安、桐庐、建德、淳安户籍&#x27;:&#123;</span><br><span class="line">            //...</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x27;落户未满2年的临安、桐庐、建德、淳安户籍&#x27;:&#123;</span><br><span class="line">            //...</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x27;非杭州市户籍&#x27;:&#123;</span><br><span class="line">            //...</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x27;非中华人民共和国国籍&#x27;:&#123;</span><br><span class="line">            //...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每一个分支的逻辑关系都通过上述数据结构来映射，哪个环节的哪些字段要不要显示，以及最后的提交要不要限购，都可以通过上述结构定义。只有你选中一个选项才会出现其选项下对应的下一个待选项（这样就直接控制了显示隐藏的逻辑），而我就通过用户的具体选项来层层检索整个数据结构，拿到特定条件的判断逻辑。具体检索代码我就不放出来了。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/personal-blog/">首页</a></li>
+         
+          <li><a href="/personal-blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhayes.github.io/personal-blog/2020/07/29/restruction/&t=记一次代码重构"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2022
+    zha
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/personal-blog/">首页</a></li><!--
+     --><!--
+       --><li><a href="/personal-blog/archives/">归档</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/personal-blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

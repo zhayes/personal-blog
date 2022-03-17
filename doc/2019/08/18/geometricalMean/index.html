@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="The Geometric Mean is a special type of average where we multiply the numbers together and then take a square root (for two numbers), cube root (for three numbers) etc.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几何平均数">
+<meta property="og:url" content="https://zhayes.github.io/personal-blog/2019/08/18/geometricalMean/index.html">
+<meta property="og:site_name" content="泡了鸭头的酸辣汤">
+<meta property="og:description" content="The Geometric Mean is a special type of average where we multiply the numbers together and then take a square root (for two numbers), cube root (for three numbers) etc.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.mathsisfun.com/numbers/images/geometric-mean-2.svg">
+<meta property="og:image" content="https://www.mathsisfun.com/numbers/images/geometric-mean-3.svg">
+<meta property="og:image" content="https://www.mathsisfun.com/measure/images/length-continuum.svg">
+<meta property="og:image" content="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2608767289,4111623120&fm=173&app=25&f=JPEG?w=370&h=227&s=6B443A625605DAA81B5535DA0000E091">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=+%5Cfrac%7BA_%7B1%7D+A_%7B2%7D%7D%7B2%7D+=%5Cfrac%7B5+(-7.5)%7D%7B2%7D=-1.25">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Csqrt%7BA_%7B1%7D%5Ctimes+A_%7B2%7D+%7D=+%5Csqrt%7B1.5%5Ctimes+0.5+%7D=0.87">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Cfrac%7BA_%7B1%7D+A_%7B2%7D+...+A_%7Bn%7D+%7D%7Bn%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Csqrt%5Bn%5D%7BA_%7B1%7D+%5Ctimes+A_%7B2%7D+%5Ctimes+...%5Ctimes+A_%7Bn%7D+%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Csqrt%5Bn%5D%7B(1+A_%7B1%7D)%5Ctimes+(1+A_%7B2%7D)%5Ctimes+...(1+A_%7BN%7D)%5C+%7D+-1">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Csqrt%7B(1+0.5)%5Ctimes+(1-0.5)+%7D+-1">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Csqrt%7B(1+0.5)%5Ctimes+(1-0.5)+%7D+-1">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Cfrac%7B1+0.5%7D%7B2%7D+=0.75">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=A=%5Cfrac%7BN%7D%7B%5Cfrac%7B1%7D%7BA_%7B1%7D+%7D+%5Cfrac%7B1%7D%7BA_%7B2%7D+%7D+...%5Cfrac%7B1%7D%7BA_%7Bn%7D+%7D+%7D+">
+<meta property="article:published_time" content="2019-08-18T04:48:56.000Z">
+<meta property="article:modified_time" content="2022-03-16T08:23:03.933Z">
+<meta property="article:author" content="zha">
+<meta property="article:tag" content="几何平均数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mathsisfun.com/numbers/images/geometric-mean-2.svg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/personal-blog/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/personal-blog/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/personal-blog/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>几何平均数</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/personal-blog/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/personal-blog/">首页</a></li><!--
+     --><!--
+       --><li><a href="/personal-blog/archives/">归档</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/personal-blog/2019/08/23/permutationAndCombination/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/personal-blog/2019/08/12/linearAlgebra/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhayes.github.io/personal-blog/2019/08/18/geometricalMean/&t=几何平均数"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9Ca-millimeter-is-half-way-between-a-molecule-and-a-mountain-%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">“a millimeter is half-way between a molecule and a mountain!”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition"><span class="toc-number">2.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Useful"><span class="toc-number">3.</span> <span class="toc-text">Useful</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0%E7%9A%84%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89%E5%8F%8A%E4%B8%8E%E7%AE%97%E6%9C%AF%E5%B9%B3%E5%9D%87%E6%95%B0%E7%9A%84%E5%85%B3%E7%B3%BB%E7%9A%84%E5%87%A0%E4%BD%95%E8%A7%A3%E9%87%8A"><span class="toc-number"></span> <span class="toc-text">几何平均数的几何意义及与算术平均数的关系的几何解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E5%B9%B3%E5%9D%87%E6%95%B0-vs-%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number"></span> <span class="toc-text">算术平均数 vs 几何平均数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%A4%E5%B9%B4%E5%88%A9%E6%B6%A6%E7%9A%84%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number">0.1.</span> <span class="toc-text">1. 两年利润的平均数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%B8%A4%E5%B9%B4%E6%9C%AC%E9%87%91%E5%8F%98%E5%8C%96%E7%9A%84%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number">0.2.</span> <span class="toc-text">2. 两年本金变化的平均数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0%EF%BC%9A"><span class="toc-number">0.3.</span> <span class="toc-text">后记：</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        几何平均数
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">zha</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-08-18T04:48:56.000Z" itemprop="datePublished">2019-08-18</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/personal-blog/categories/%E6%95%B0%E5%AD%A6/">数学</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/personal-blog/tags/%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0/" rel="tag">几何平均数</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>原文链接：<a target="_blank" rel="noopener" href="https://www.mathsisfun.com/numbers/geometric-mean.html">https://www.mathsisfun.com/numbers/geometric-mean.html</a></p>
+<p>The Geometric Mean is a special type of average where we multiply the numbers together and then take a square root (for two numbers), cube root (for three numbers) etc.</p>
+<p>Example: What is the Geometric Mean of 2 and 18?<br>First we multiply them: 2 × 18 &#x3D; 36<br>Then (as there are two numbers) take the square root: √36 &#x3D; 6<br>In one line:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Geometric Mean of 2 and 18 = √(2 × 18) = 6</span><br></pre></td></tr></table></figure>
+
+<p>It is like the area is the same!</p>
+<p><img src="https://www.mathsisfun.com/numbers/images/geometric-mean-2.svg"></p>
+<p>Example: What is the Geometric Mean of 10, 51.2 and 8?</p>
+<p>First we multiply them: 10 × 51.2 × 8 &#x3D; 4096<br>Then (as there are three numbers) take the cube root: 3√4096 &#x3D; 16<br>In one line:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Geometric Mean = 3√(10 × 51.2 × 8) = 16</span><br></pre></td></tr></table></figure>
+
+<p>It is like the volume is the same:</p>
+<p><img src="https://www.mathsisfun.com/numbers/images/geometric-mean-3.svg"></p>
+<p>Example: What is the Geometric Mean of 1, 3, 9, 27 and 81?<br>First we multiply them: 1 × 3 × 9 × 27 × 81 &#x3D; 59049<br>Then (as there are 5 numbers) take the 5th root: 5√59049 &#x3D; 9<br>In one line:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Geometric Mean = 5√(1 × 3 × 9 × 27 × 81) = 9</span><br></pre></td></tr></table></figure>
+
+<p>I can’t show you a nice picture of this, but it is still true that:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 × 3 × 9 × 27 × 81  =  9 × 9 × 9 × 9 × 9</span><br></pre></td></tr></table></figure>
+
+<p>Example: What is the Geometric Mean of a Molecule(分子) and a Mountain</p>
+<p><img src="https://www.mathsisfun.com/measure/images/length-continuum.svg"></p>
+<p>Using <a target="_blank" rel="noopener" href="https://www.mathsisfun.com/numbers/scientific-notation.html">scientific notation</a>:</p>
+<p>A molecule of water (for example) is 0.275 × 10-9 m<br>Mount Everest (for example) is 8.8 × 103 m</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Geometric Mean	= √(0.275 × 10-9 × 8.8 × 103)</span><br><span class="line">    = √(2.42 × 10-6)</span><br><span class="line">    ≈ 0.0016 m</span><br></pre></td></tr></table></figure>
+
+<p>Which is 1.6 millimeters, or about the thickness of a coin.</p>
+<p>We could say, in a rough kind of way,</p>
+<h3 id="“a-millimeter-is-half-way-between-a-molecule-and-a-mountain-”"><a href="#“a-millimeter-is-half-way-between-a-molecule-and-a-mountain-”" class="headerlink" title="“a millimeter is half-way between a molecule and a mountain!”"></a>“a millimeter is half-way between a molecule and a mountain!”</h3><p>So the geometric mean gives us a way of finding a value in between widely different values.</p>
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>For n numbers: multiply them all together and then take the nth root (written <code>n√</code> )<br>More formally, the geometric mean of n numbers a1 to an is:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n√(a1 × a2 × ... × an)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Useful"><a href="#Useful" class="headerlink" title="Useful"></a>Useful</h3><p>The Geometric Mean is useful when we want to compare things with very different properties.</p>
+<p>top view camera<br>Example: you want to buy a new camera.<br>One camera has a zoom of 200 and gets an 8 in reviews,<br>The other has a zoom of 250 and gets a 6 in reviews.<br>Comparing using the usual arithmetic mean gives <code>(200+8)/2 = 104 vs (250+6)/2 = 128</code>. The zoom is such a big number that the user rating gets lost.</p>
+<p>But the geometric means of the two cameras are:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">√(200 × 8) = 40</span><br><span class="line">√(250 × 6) = 38.7...</span><br></pre></td></tr></table></figure>
+<p>So, even though the zoom is 50 bigger, the lower user rating of 6 is still important.</p>
+<h2 id="几何平均数的几何意义及与算术平均数的关系的几何解释"><a href="#几何平均数的几何意义及与算术平均数的关系的几何解释" class="headerlink" title="几何平均数的几何意义及与算术平均数的关系的几何解释"></a>几何平均数的几何意义及与算术平均数的关系的几何解释</h2><p>原文链接：<a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1608753027046746833&amp;wfr=spider&amp;for=pc">https://baijiahao.baidu.com/s?id=1608753027046746833&amp;wfr=spider&amp;for=pc</a></p>
+<p>我们看两个数的情况。设有两个数a、b，其算术平均数为<code>（a +b）/2</code>，几何平均数为<code>√ab</code>，两者关系为<code>（a+ b）/2≥√ab</code>。下面我们从几何上来理解几何平均数的含义及算术平均数与几何平均数的关系。</p>
+<p><img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2608767289,4111623120&fm=173&app=25&f=JPEG?w=370&h=227&s=6B443A625605DAA81B5535DA0000E091"></p>
+<p>如图1，⊿ABD为圆内三角形，AB为直径（故⊿ABD必为直角三角形），DD’垂直于AB，并将AB分成长为a、 b的 两段（注意DD’不一定为直径），现在若已知a,、b 两段的长度，问CD长度为几何？与a 、b有何关系？因为⊿ABD、⊿ACD、⊿CBD均为直角三角形，故此有以下关系：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CD^2+ a^2 = AD^2；</span><br><span class="line">CD^2 + b^2 = BD^2；</span><br><span class="line">AD^2 + BD^2 = AB^2 =（a+b）^2</span><br></pre></td></tr></table></figure>
+<p>于是有：<code>CD^2+ a^2 + CD^2 + b^2= a^2+b^2+2ab</code>等式两边化简，得：<code>CD^2= ab</code>即：<code>CD= √ab</code>。另外，由上图可见，<code>（a +b）/2 ≥ √ab</code>（仅当DD’为直径时相等）。问题得以证明。</p>
+<h2 id="算术平均数-vs-几何平均数"><a href="#算术平均数-vs-几何平均数" class="headerlink" title="算术平均数 vs 几何平均数"></a>算术平均数 vs 几何平均数</h2><p>原文链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23809612">https://zhuanlan.zhihu.com/p/23809612</a></p>
+<p>首先明确一点，几何平均数和算数平均数其实都是一种衡量平均水平的统计方法，之所以计算方法有差别，是因为数据类型的不同导致。 </p>
+<p>无论任何平均数，其意义都是：对于数列用某一个常数A将数列中的每一项替换，形成的新数列结果上与旧数列等效。这个常数A，就是数列An的平均数。 </p>
+<p>那么什么时候用算数平均数什么时候用几何平均数呢，我们来考虑以下的情形：你发现最近二师兄（猪肉）身价猛涨，于是投入了10万元本金开始卖猪肉，果然第一年赚得盆满钵满的，赚了5万元，本金变成了10+5&#x3D;15万元。但是好景不长，商品的供需周期的变化，第二年的时候很多猪肉供应商开始进入猪肉市场，供应的大量增加导致猪肉价格快速下跌，第二年亏了7.5万元，本金变成了15-7.5&#x3D;7.5万元。 </p>
+<p>现在我们想计算下述两个平均数： </p>
+<h4 id="1-两年利润的平均数"><a href="#1-两年利润的平均数" class="headerlink" title="1. 两年利润的平均数"></a>1. 两年利润的平均数</h4><p>这种类型的平均数最终结果是一个和，第一年利润是5万元，第二年利润是-7.5万元，最终结果是亏了2.5万元，年均亏1.25万元。<br>两年赚的钱构成的数列{A1,A2}<br>根据平均数的定义，为构造一个数列与其等效{A,A}<br>那么这个等效数列<br><img src="https://www.zhihu.com/equation?tex=A=+%5Cfrac%7BA_%7B1%7D+A_%7B2%7D%7D%7B2%7D+=%5Cfrac%7B5+(-7.5)%7D%7B2%7D=-1.25"><br>万元<br>也就是第一年赚5万元并且第二年亏7.5万元和两年都亏1.25万元等效。 </p>
+<h4 id="2-两年本金变化的平均数"><a href="#2-两年本金变化的平均数" class="headerlink" title="2. 两年本金变化的平均数"></a>2. 两年本金变化的平均数</h4><p>这种类型的平均数最终结果是一个积，第一年初本金是10万元，第一年末变成15万元增长到了1.5倍，第二年末变成7.5万元下降到了0.5倍。<br>两年本金增长倍数{A1,A2}<br>根据平均数的定义，为构造一个数列与其等效{A,A}<br>那么这个等效数列<br><img src="https://www.zhihu.com/equation?tex=A=%5Csqrt%7BA_%7B1%7D%5Ctimes+A_%7B2%7D+%7D=+%5Csqrt%7B1.5%5Ctimes+0.5+%7D=0.87"><br>也就是第一年本金增长到1.5倍并且第二年下降到0.5倍和两年都下降到0.87倍等效。 </p>
+<p>总结来说，当数据最终结果是一个和时，用算术平均数更合适，当数据最终结果是一个积时，用几何平均数更加合适。所以一般在算增长率的时候，用几何平均数更加合适。 </p>
+<p>算术平均数<br><img src="https://www.zhihu.com/equation?tex=A=%5Cfrac%7BA_%7B1%7D+A_%7B2%7D+...+A_%7Bn%7D+%7D%7Bn%7D+"><br>几何平均数<br><img src="https://www.zhihu.com/equation?tex=A=%5Csqrt%5Bn%5D%7BA_%7B1%7D+%5Ctimes+A_%7B2%7D+%5Ctimes+...%5Ctimes+A_%7Bn%7D+%7D+"></p>
+<p>注意几何平均数里如果是增长率的话用的公式是<br><img src="https://www.zhihu.com/equation?tex=A=%5Csqrt%5Bn%5D%7B(1+A_%7B1%7D)%5Ctimes+(1+A_%7B2%7D)%5Ctimes+...(1+A_%7BN%7D)%5C+%7D+-1"></p>
+<p>例如上述例题中增长率<br><img src="https://www.zhihu.com/equation?tex=A=%5Csqrt%7B(1+0.5)%5Ctimes+(1-0.5)+%7D+-1"><br>如果平均数用得不合适，容易导致荒谬的结论。举个例子，假如一只股票价格第一年初价格为10元，第一年增长了100%变成了20元，第二年下降了50%变成了10元，在算平均增长率时 </p>
+<p>几何平均数<br><img src="https://www.zhihu.com/equation?tex=A=%5Csqrt%7B(1+0.5)%5Ctimes+(1-0.5)+%7D+-1"></p>
+<p>算数平均数<br><img src="https://www.zhihu.com/equation?tex=A=%5Cfrac%7B1+0.5%7D%7B2%7D+=0.75"></p>
+<p>几何平均数才是更加合理的答案，因为这个股票第一年初价格为10元，第二年末价格也是10元，增长率为0%，算术平均数算出来的75%就显得很荒谬。 </p>
+<h4 id="后记："><a href="#后记：" class="headerlink" title="后记："></a>后记：</h4><ol>
+<li><p>平均数还有一种叫做调和平均数，计算公式为：<br><img src="https://www.zhihu.com/equation?tex=A=%5Cfrac%7BN%7D%7B%5Cfrac%7B1%7D%7BA_%7B1%7D+%7D+%5Cfrac%7B1%7D%7BA_%7B2%7D+%7D+...%5Cfrac%7B1%7D%7BA_%7Bn%7D+%7D+%7D+"><br>适用的例子是我们初中物理中学到的并联电路中各个并联电阻构成的电路总电阻的计算。各电阻为A1,A2,…,An并联和A,A,…,A并联构成的电路总电阻等效。</p>
+</li>
+<li><p>根据不等式的性质可以证明：<code>算术平均数 &gt; 几何平均数 &gt; 调和平均数</code></p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/personal-blog/">首页</a></li>
+         
+          <li><a href="/personal-blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9Ca-millimeter-is-half-way-between-a-molecule-and-a-mountain-%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">“a millimeter is half-way between a molecule and a mountain!”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition"><span class="toc-number">2.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Useful"><span class="toc-number">3.</span> <span class="toc-text">Useful</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0%E7%9A%84%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89%E5%8F%8A%E4%B8%8E%E7%AE%97%E6%9C%AF%E5%B9%B3%E5%9D%87%E6%95%B0%E7%9A%84%E5%85%B3%E7%B3%BB%E7%9A%84%E5%87%A0%E4%BD%95%E8%A7%A3%E9%87%8A"><span class="toc-number"></span> <span class="toc-text">几何平均数的几何意义及与算术平均数的关系的几何解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E5%B9%B3%E5%9D%87%E6%95%B0-vs-%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number"></span> <span class="toc-text">算术平均数 vs 几何平均数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%A4%E5%B9%B4%E5%88%A9%E6%B6%A6%E7%9A%84%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number">0.1.</span> <span class="toc-text">1. 两年利润的平均数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%B8%A4%E5%B9%B4%E6%9C%AC%E9%87%91%E5%8F%98%E5%8C%96%E7%9A%84%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number">0.2.</span> <span class="toc-text">2. 两年本金变化的平均数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0%EF%BC%9A"><span class="toc-number">0.3.</span> <span class="toc-text">后记：</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zhayes.github.io/personal-blog/2019/08/18/geometricalMean/&t=几何平均数"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2022
+    zha
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/personal-blog/">首页</a></li><!--
+     --><!--
+       --><li><a href="/personal-blog/archives/">归档</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/personal-blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
