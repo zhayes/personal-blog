@@ -419,7 +419,7 @@ body table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
   overflow: auto;
   display: block;
 }
@@ -428,7 +428,7 @@ body th {
   border-bottom: 1px dashed #908d8d;
   color: #eee;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
 }
 body td {
   padding: 0 8px;
@@ -448,7 +448,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  border-top: 2px solid #c9cacc;
+  border-top: 2px solid rgba(255,255,255,0.878);
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
@@ -456,10 +456,10 @@ body {
   margin: 0;
   height: 100%;
   background-color: #1d1f21;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   font-display: swap;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   font-family: "Noto Serif SC, serif";
   line-height: 1.9;
   text-rendering: geometricPrecision;
@@ -487,9 +487,9 @@ body {
   -webkit-hyphens: manual;
 }
 .content a {
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   text-decoration: none;
-  background-image: linear-gradient(transparent, transparent 5px, #c9cacc 5px, #c9cacc);
+  background-image: linear-gradient(transparent, transparent 5px, rgba(255,255,255,0.878) 5px, rgba(255,255,255,0.878));
   background-position: bottom;
   background-size: 100% 6px;
   background-repeat: repeat-x;
@@ -576,7 +576,7 @@ body {
 #header .h1 {
   margin-top: 0;
   margin-bottom: 0;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   letter-spacing: 0.01em;
   font-weight: 700;
   font-style: normal;
@@ -818,7 +818,7 @@ body {
   display: none;
 }
 #header-post #toc .toc-level-2 {
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   font-size: 0.8rem;
 }
 #header-post #toc .toc-level-2:before {
@@ -998,7 +998,7 @@ body {
   display: none;
 }
 #footer-post #toc-footer .toc-level-2 {
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   font-size: 0.8rem;
 }
 #footer-post #toc-footer .toc-level-2:before {
@@ -1040,7 +1040,7 @@ body {
   margin-right: 16px;
   min-width: 100px;
   color: #908d8d;
-  font-size: 14px;
+  font-size: 15px;
 }
 @media (min-width: 480px) {
   .post-list .post-item {
@@ -1303,14 +1303,14 @@ article .content .caption {
   text-align: center;
 }
 .pagination .page-number {
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   font-size: 0.8rem;
 }
 .pagination a {
   padding: 4px 6px;
   border-radius: 5px;
   background-image: none;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   text-decoration: none;
 }
 .pagination a:hover {
@@ -1326,7 +1326,7 @@ article .content .caption {
   border: solid 1px #ccc;
   border-radius: 5px;
   background-color: #1d1f21;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   font-size: 1.2rem;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1343,7 +1343,7 @@ article .content .caption {
 }
 #search-result a.search-result-title {
   background-image: none;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   text-transform: capitalize;
   font-weight: bold;
   line-height: 1.2;
@@ -1363,7 +1363,7 @@ article .content .caption {
 .search-no-result {
   display: none;
   padding-bottom: 0.5em;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
 }
 #tag-cloud .tag-cloud-title {
   color: #908d8d;
@@ -1388,7 +1388,7 @@ article .content .caption {
   color: #1d1f21;
   font-display: swap;
   font-weight: 400;
-  font-size: 11.200000000000001px;
+  font-size: 12px;
   font-family: "Noto Serif SC, serif";
   line-height: 1.9;
   text-rendering: geometricPrecision;
@@ -1396,7 +1396,7 @@ article .content .caption {
   word-wrap: break-word;
   white-space: pre;
   content: attr(aria-label);
-  background: #c9cacc;
+  background: rgba(255,255,255,0.878);
   border-radius: 3px;
   opacity: 0;
 }
@@ -1406,7 +1406,7 @@ article .content .caption {
   display: none;
   width: 0;
   height: 0;
-  color: #c9cacc;
+  color: rgba(255,255,255,0.878);
   pointer-events: none;
   content: '';
   border: 6px solid transparent;
@@ -1437,7 +1437,7 @@ article .content .caption {
   right: 50%;
   bottom: -7px;
   margin-right: -6px;
-  border-bottom-color: #c9cacc;
+  border-bottom-color: rgba(255,255,255,0.878);
 }
 .tooltipped-sw::after {
   margin-right: -16px;
